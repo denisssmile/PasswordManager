@@ -12,5 +12,4 @@ class EventBus:
             for callback in self.subscribers[event_type]:
                 callback(data)
 
-# Создаем один глобальный экземпляр
 bus = EventBus()

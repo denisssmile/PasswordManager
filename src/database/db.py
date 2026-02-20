@@ -7,6 +7,26 @@ class DatabaseManager:
 
     def create_tables(self):
         cursor = self.conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS audit_log (
+                id INTEGER PRIMARY KEY,
+                action TEXT,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                entry_id INTEGER,
+                details TEXT,
+                signature TEXT
+            )
+        ''')
+
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS key_store (
+                id INTEGER PRIMARY KEY,
+                key_type TEXT,
+                salt BLOB,
+                hash BLOB,
+                params TEXT
+            )
+        ''')
         #таблица паролей
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS vault_entries (

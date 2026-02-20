@@ -2,7 +2,7 @@ import customtkinter as ctk
 
 #тема dark, light, ssystem
 ctk.set_appearance_mode("dark")
-#blue, green, dark-blue
+#blue, green, dark blue
 ctk.set_default_color_theme("blue")
 
 

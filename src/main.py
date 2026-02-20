@@ -2,6 +2,7 @@ import os
 import customtkinter as ctk
 from database.db import DatabaseManager
 from gui.main_window import MainWindow
+from tkinter import messagebox
 
 
 
@@ -28,10 +29,16 @@ def show_setup_wizard(db):
     pwd_entry.pack(pady=10)
 
     def save_master():
-        # В Спринте 1 просто сохраняем (в Спринте 2 добавим Argon2)
-        password = pwd_entry.get()
-        db.conn.execute("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?)",
-                        ("master_hash", password))
+        password = pwd_entry.get().strip()
+
+        if not password:
+            messagebox.showerror("Ошибка", "Мастер-пароль не может быть пустым!")
+            return
+
+        db.conn.execute(
+            "INSERT INTO settings (setting_key, setting_value) VALUES (?, ?)",
+            ("master_hash", password)
+        )
         db.conn.commit()
         setup.destroy()
         show_main_window()
